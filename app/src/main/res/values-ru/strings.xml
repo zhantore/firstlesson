@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Первый Урок</string>
+    <string name="show_button">Показать</string>
+    <string name="enter_your_fullname">Введите ваше ФИО</string>
+</resources>
