@@ -1,20 +1,28 @@
 package com.example.firstlesson;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     Button showBtn;
     EditText fioText;
+    ImageView imageView;
     String TAG = "MainActivity";
 
     @Override
@@ -24,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         showBtn = findViewById(R.id.showButton);
         fioText = findViewById(R.id.editFullname);
+        fioText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                DialogFragment dialogFragment = new DatePickerFragment();
+                dialogFragment.show(getSupportFragmentManager(), "DatePicker");
+            }
+        });
 
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +48,124 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(activityIntent);
             }
         });
+
+        imageView = findViewById(R.id.imageView);
+//        final Animation fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+//        final Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
+//        final Animation rotateRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_right);
+//        final Animation rotateLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_left);
+//        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                imageView.startAnimation(fadeOut);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                imageView.startAnimation(fadeIn);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        rotateRight.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                imageView.startAnimation(rotateLeft);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        rotateLeft.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                imageView.startAnimation(rotateRight);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        imageView.startAnimation(fadeIn);
+        final Animation scaleIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_right);
+        final Animation scaleOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_left);
+        scaleIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imageView.startAnimation(scaleOut);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        scaleOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imageView.startAnimation(scaleIn);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        imageView.startAnimation(scaleIn);
     }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar mCalender = Calendar.getInstance();
+        mCalender.set(Calendar.YEAR, year);
+        mCalender.set(Calendar.MONTH, month);
+        mCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String dateResult = DateFormat.getDateInstance(DateFormat.FULL).format(mCalender.getTime());
+        fioText.setText(dateResult);
+    }
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG, "onPostResume()");
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -83,4 +214,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.v(TAG, "onDestroy()");
     }
+
 }
