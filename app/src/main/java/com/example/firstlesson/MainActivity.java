@@ -1,6 +1,7 @@
 package com.example.firstlesson;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,11 +14,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -174,9 +179,33 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        Log.v(TAG, "onResumeFragments()");
+    }
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        super.onAttachFragment(fragment);
+        Log.v(TAG, "onAttachFragment()");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.v(TAG, "onNewIntent()");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.v(TAG, "onBackPressed()");
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.v(TAG, "onActivityResult()");
     }
 
     @Override
@@ -226,5 +255,4 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onDestroy();
         Log.v(TAG, "onDestroy()");
     }
-
 }
