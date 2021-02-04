@@ -2,6 +2,7 @@ package com.example.firstlesson;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     EditText fioText;
     ImageView imageView;
     String TAG = "MainActivity";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +41,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 dialogFragment.show(getSupportFragmentManager(), "DatePicker");
             }
         });
-
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent activityIntent = new Intent(getApplicationContext(), DetailedActivity.class);
-                activityIntent.putExtra("Fullname", fioText.getText().toString());
+//                activityIntent.putExtra("Fullname", fioText.getText().toString());
+                sharedPreferences
+                        .edit()
+                        .putString("date_time", fioText.getText().toString())
+                        .apply();
                 startActivity(activityIntent);
             }
         });
+
+        sharedPreferences = new SharedFiles(getApplicationContext()).getSharedPreferences();
 
         imageView = findViewById(R.id.imageView);
 //        final Animation fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
@@ -166,6 +173,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         fioText.setText(dateResult);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
