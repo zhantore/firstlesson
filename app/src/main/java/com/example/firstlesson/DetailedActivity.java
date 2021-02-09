@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.firstlesson.preference.SharedFiles;
+
 public class DetailedActivity extends AppCompatActivity {
 
     TextView resultText;

@@ -1,10 +1,11 @@
-package com.example.firstlesson
+package com.example.firstlesson.helper_class
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
+import com.example.firstlesson.ServiceActivity
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit

@@ -1,4 +1,4 @@
-package com.example.firstlesson;
+package com.example.firstlesson.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
